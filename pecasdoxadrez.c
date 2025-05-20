@@ -1,55 +1,76 @@
 #include <stdio.h>
 
-int main(){
+// Funcao recursiva para movimento da torre
 
-    // Simulacao do movimento da torre -> 5 casas para direita
+void moverTorre(int movimentosRestantes) {
+    if (movimentosRestantes == 0) return;
+    printf("Direita\n");
+    moverTorre(movimentosRestantes - 1);
+}
 
-    int movimentoTorre;
-    int casasTorre = 5;
-    printf("Movimento da Torre: \n");
-    for (movimentoTorre = 1; movimentoTorre <= casasTorre; movimentoTorre++) {
+// Funcao recursiver para movimento da rainha
+
+void moverRainha(int movimentosRestantes) {
+    if (movimentosRestantes == 0) return;
+    printf("Esquerda\n");
+    moverRainha(movimentosRestantes - 1);
+}
+
+// Funcao recursiva para movimento do bispo + loop aninhado
+void moverBispo(int casasVerticais, int casasHorizontais) {
+    if (casasVerticais == 0) return;
+
+    for (int i = 0; i < casasHorizontais; i++){
         printf("Direita\n");
     }
 
-    // Simulacao do movimento do bisco -> 5 casas na diagonal cima/direita
+    printf("Cima\n");
+    moverBispo(casasVerticais -1, casasHorizontais);
 
-    int movimentoBispo = 1;
-    int casasBispo = 5;
+}
+
+int main(){
+
+    // Simulacao do movimento da torre -> 5 casas para direita (RECURSIVO)
+
+    int casasTorre = 5;
+    printf("Movimento da Torre:\n");
+    moverTorre(casasTorre);
+
+    // Simulacao do movimento do bispo -> 5 casas na diagonal cima/direita (RECURSIVO + LOOP)
+
+    int casasBispoVerticais = 5;
+    int casasBispoHorizontais = 1;
     printf("\nMovimento do Bispo:\n");
-    while(movimentoBispo <= casasBispo){
-        printf("Cima Direita\n");
-        movimentoBispo++;
-    }
+    moverBispo(casasBispoVerticais, casasBispoHorizontais);
 
-    // Simulacao do movimento da rainha -> 8 casas pra esquerda
+    // Simulacao do movimento da rainha -> 8 casas pra esquerda (RECURSIVO)
 
-    int movimentoRainha = 1;
     int casasRainha = 8;
     printf("\nMovimento da Rainha:\n");
-    do {
-        printf("Esquerda\n");
-        movimentoRainha++;
-    }while (movimentoRainha <= casasRainha);
+    moverRainha(casasRainha);
 
-    // Simulacao do movimento do cavalo -> 2 casas pra baixo e 1 pra esquerda
+    // Simulacao do movimento do cavalo -> 2 casas pra baixo e 1 pra esquerda (loop + controle avancado)
 
-    int movimentoCavaloBaixo, movimentoCavaloEsquerda = 0;
-    int casasCavaloBaixo = 2;
-    int casasCavaloEsquerda = 1;
+    int movimentoCavaloCima, movimentoCavaloDireita;
+    int casasCavaloCima = 2;
+    int casasCavaloDireita = 1;
 
     printf("\nMovimento do Cavalo:\n");
-
-    // Loop externo -> 2 movimentos pra baixo
-
-    for (movimentoCavaloBaixo = 1; movimentoCavaloBaixo <= casasCavaloBaixo; movimentoCavaloBaixo++) {
-        printf("Baixo\n");
-
-        //Loop interno -> 1 movimento pra esquerda
-
-        while(movimentoCavaloBaixo == casasCavaloBaixo && movimentoCavaloEsquerda < casasCavaloEsquerda){
-            printf("Esquerda\n");
-            movimentoCavaloEsquerda++;
+    
+    for (movimentoCavaloCima = 1; movimentoCavaloCima <= casasCavaloCima; movimentoCavaloCima++) {
+        if (movimentoCavaloCima == 2){
+            for (movimentoCavaloDireita = 1; movimentoCavaloDireita <= casasCavaloDireita; movimentoCavaloDireita++){
+                if (movimentoCavaloDireita == 1){
+                    printf("Direita\n");
+                    break;
+                }
+            }
         }
+        if (movimentoCavaloCima == 1){
+            continue;
+        }
+        printf("Cima\n");
     }
 
     return 0;
